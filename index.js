@@ -4,6 +4,9 @@ const morgan = require('morgan')
 const cors = require('cors')
 const bodyParser = require('body-parser');
 
+//adicionando o arquivo routes
+const routes = require('./config/routes')
+
 //Usando o express na constante app
 const app = express()
 
@@ -20,21 +23,15 @@ app.use(express.json())
 //não sera passado parametro pois a API sera consumida no localhost (Acrescentado apenas para efeito de estudo)
 app.use(cors())
 
+//Usando o routes no app
+app.routes
+
 //variavel declarada para servir como um banco de dados em tempo de execução
 let db = [
-    {'1' : {Nome: 'Clente 1', idade:'20'}},
-    {'1' : {Nome: 'Clente 2', idade:'20'}},
-    {'1' : {Nome: 'Clente 3', idade:'20'}}
+    {'1' : {Nome: 'Cliente 1', idade:'20'}},
+    {'2' : {Nome: 'Cliente 2', idade:'20'}},
+    {'3' : {Nome: 'Cliente 3', idade:'20'}}
 ]
-
-//definindo as rotas
-
-//rota para a pagina padrão recebendo dois parametros req e res que são abstraídos pelo express
-//req é o parametro da requisição e res o da resposta
-app.get('/', (req, res) => {
-    //fazendo o retorno no formato json da variável db definda acima
-     return res.json(db)
-})
 
 //Inicializando o servidor e passando a porta que será utilizada
 app.listen(21262, () => {
