@@ -4,7 +4,7 @@ const morgan = require('morgan')
 const cors = require('cors')
 const bodyParser = require('body-parser');
 
-//adicionando o arquivo routes
+//adicionando o arquivo routes. Rotas criadas para uso da API
 const routes = require('./config/routes')
 
 //Usando o express na constante app
@@ -24,14 +24,7 @@ app.use(express.json())
 app.use(cors())
 
 //Usando o routes no app
-app.routes
-
-//variavel declarada para servir como um banco de dados em tempo de execução
-let db = [
-    {'1' : {Nome: 'Cliente 1', idade:'20'}},
-    {'2' : {Nome: 'Cliente 2', idade:'20'}},
-    {'3' : {Nome: 'Cliente 3', idade:'20'}}
-]
+app.use(routes)
 
 //Inicializando o servidor e passando a porta que será utilizada
 app.listen(21262, () => {

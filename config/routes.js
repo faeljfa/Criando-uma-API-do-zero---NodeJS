@@ -4,8 +4,12 @@ const express = require('express')
 //utilizando a biblioteca router do express para fazer as rotas
 const routes = express.Router()
 
-//exportando o módulo routes para que possa ser utilizado no projeto
-module.exports = routes
+//variavel declarada para servir como um banco de dados em tempo de execução
+let db = [
+    {'1' : {Nome: 'Cliente 1', idade:'20'}},
+    {'2' : {Nome: 'Cliente 2', idade:'20'}},
+    {'3' : {Nome: 'Cliente 3', idade:'20'}}
+]
 
 //definindo as rotas
 
@@ -23,7 +27,7 @@ routes.post('/add', (req, res) => {
     //recebe a requisição 'req.body'
     const body = req.body
 
-    //verificando se o body existe. Caso não retorna pro usuário o erro 400
+    //verificando se o body existe. Caso não, retorna pro usuário o erro 400
     if(!body){
         //fazendo o retorno da mensagem para o usuario. Mensagem enviada pelo metodo status
         return res.status(400).end()
@@ -35,3 +39,28 @@ routes.post('/add', (req, res) => {
     //Após realizar a inserção, realiza o retorno passando como parametro o body em formato json
     return res.json(body)
 })
+
+//criando o método delete
+//enviando o parametro pelos parameters
+routes.delete('/:id', (req, res)=>{
+
+    //declarando a constante erecebendo o parametro enviado pela url
+    const id = req.params.id
+
+    //tratando os dados que estão na constante db e retornando se o item caso ele 
+    //seja diferente do que foi passado por parametro 
+    let newDB = db.filter(item => {
+        if(!item[id])
+        return item
+    })
+
+    //Para que seja realmente modificada a constante db, que representa nosso banco, a 
+    //variavel db recebe newDB
+    db = newDB
+
+    //retornando a variavel newDB
+    return res.send(newDB)
+})
+
+//exportando o módulo routes para que possa ser utilizado no projeto
+module.exports = routes
